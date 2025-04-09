@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environment
+venv/
+env/
+
+# Django SQLite database
+*.sqlite3
+
+# Django secret key or local settings
+*.env
+.env.*
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Byte-compiled / cache
+*.log
+
+# Migrations (optional, if you don't want to track them initially)
+# **Be careful with this.**
+# */migrations/
+# */migrations/*.py
+# */migrations/*.pyc
+
+# Static files (if generated)
+staticfiles/
+static/
+
+# Media files
+media/
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# MyPy, Pylint, etc.
+.mypy_cache/
+.pytest_cache/
+.dmypy.json
+.cache/
