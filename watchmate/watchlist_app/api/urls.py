@@ -1,4 +1,4 @@
-from watchlist_app import views
+from watchlist_app.api import views
 from django.urls import path
 
 urlpatterns = [
