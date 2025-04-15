@@ -9,11 +9,11 @@ from rest_framework import validators
 #         return value
     
 
-class MovieSerializer(serializers.ModelSerializer):
+class WatchListSerializer(serializers.ModelSerializer):
     #custom serializer
     len_name=serializers.SerializerMethodField()
     class Meta:
-        model=Movie
+        model=WatchList
 
         fields="__all__"
         # your to specific field 
@@ -22,23 +22,39 @@ class MovieSerializer(serializers.ModelSerializer):
         # exclude=['active']
 
     def get_len_name(self,object):
-        return len(object.name)
+        return len(object.title)
+
+class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
+    platform = serializers.HyperlinkedRelatedField(
+        view_name='movie_detail',
+        read_only=True
+    )
+    #nested serializers
+    #watchlist=WatchListSerializer(many=True,read_only=True)
+    #watchlist=serializers.StringRelatedField(many=True,read_only=True)  #it return only movie name using in model def __str__()
+    #watchlist=serializers.PrimaryKeyRelatedField(many=True,read_only=True) #it return id of movie 
+    
+    #watchlist=serializers.HyperlinkedRelatedField(many=True,read_only=True,view_name="movie_details")
+
+    class Meta:
+        model=StreamPlatform
+        fields="__all__"
 
 
-        #object level validators
-    def validate(self, data):
-        if data['name']==data['description']:
-            raise serializers.ValidationError("Name should not be same as description")
-        else:
-            return data
+    #object level validators
+    # def validate(self, data):
+    #     if data['name']==data['description']:
+    #         raise serializers.ValidationError("Name should not be same as description")
+    #     else:
+    #         return data
     
 
-    # field level validators
-    def validate_name(self,value):
-        if len(value)<2:
-            raise serializers.ValidationError("Name too short")
-        else:
-            return value
+    # # field level validators
+    # def validate_name(self,value):
+    #     if len(value)<2:
+    #         raise serializers.ValidationError("Name too short")
+    #     else:
+    #         return value
 
 # class MovieSerializer(serializers.Serializer):
 #     id=serializers.IntegerField(read_only=True)
