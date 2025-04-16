@@ -7,9 +7,16 @@ from rest_framework import validators
 #         raise serializers.ValidationError("Name too short")
 #     else:
 #         return value
-    
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Review
+        # fields='__all__'
+        exclude=['watchlist']
 
 class WatchListSerializer(serializers.ModelSerializer):
+    reviews=ReviewSerializer(many=True,read_only=True)
+
     #custom serializer
     len_name=serializers.SerializerMethodField()
     class Meta:
@@ -24,17 +31,13 @@ class WatchListSerializer(serializers.ModelSerializer):
     def get_len_name(self,object):
         return len(object.title)
 
-class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
-    platform = serializers.HyperlinkedRelatedField(
-        view_name='movie_detail',
-        read_only=True
-    )
+class StreamPlatformSerializer(serializers.ModelSerializer):
     #nested serializers
-    #watchlist=WatchListSerializer(many=True,read_only=True)
+    watchlist=WatchListSerializer(many=True,read_only=True)
     #watchlist=serializers.StringRelatedField(many=True,read_only=True)  #it return only movie name using in model def __str__()
     #watchlist=serializers.PrimaryKeyRelatedField(many=True,read_only=True) #it return id of movie 
     
-    #watchlist=serializers.HyperlinkedRelatedField(many=True,read_only=True,view_name="movie_details")
+    #watchlist=serializers.HyperlinkedRelatedField(many=True,read_only=True,view_name="movie_details") #view name is url name
 
     class Meta:
         model=StreamPlatform
