@@ -5,10 +5,12 @@ from watchlist_app.models import *
 # from django.http import HttpResponse,JsonResponse
 from rest_framework.response import Response
 from .serializers import *
+from .permissions import AdminOrReadOnly,ReviewUserOrReadOnly
 from rest_framework import status
 from rest_framework import generics,mixins
 from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
 
 
 # Create your views here.
@@ -72,31 +74,42 @@ from rest_framework.exceptions import ValidationError
 
 class ReviewCreate(generics.CreateAPIView):
     serializer_class=ReviewSerializer
+    permission_classes=[ReviewUserOrReadOnly]
     def get_queryset(self):
         return Review.objects.all()
 
     def perform_create(self, serializer): 
         pk=self.kwargs.get('pk')
-        movie=WatchList.objects.get(pk=pk)
+        watchlist=WatchList.objects.get(pk=pk)
 
         review_user=self.request.user
-        review_queryset=Review.objects.filter(watchlist=movie,review_user=review_user)
-        if review_queryset.exists:
+        review_queryset=Review.objects.filter(watchlist=watchlist,review_user=review_user)
+        if review_queryset.exists():
             raise ValidationError("You have already reviewed the movie")
-        serializer.save(watchlist=movie,review_user=review_user)
+        
+        if watchlist.number_of_rating==0:
+            watchlist.avg_rating=serializer.validated_data['rating']
+        else:
+            watchlist.avg_rating=(watchlist.avg_rating+serializer.validated_data['rating']/2)
+        
+        watchlist.number_of_rating=watchlist.number_of_rating+1
+        watchlist.save()
+        serializer.save(watchlist=watchlist,review_user=review_user)
 
 class ReviewList(generics.ListCreateAPIView):
     #queryset=Review.objects.all()
     serializer_class=ReviewSerializer
-
+    permission_classes=[IsAuthenticated]
 #self.kwargs is a dictionary of keyword arguments captured from the URL pattern (like path('movie/<int:pk>/reviews/', ...)).
     def get_queryset(self):
         pk=self.kwargs['pk']
         return Review.objects.filter(watchlist=pk)
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes=[ReviewUserOrReadOnly]
     queryset=Review.objects.all()
     serializer_class=ReviewSerializer
+    
 
 ###########################################################################################
 ###############################Generic view using mixins
