@@ -90,7 +90,7 @@ class ReviewCreate(generics.CreateAPIView):
         if watchlist.number_of_rating==0:
             watchlist.avg_rating=serializer.validated_data['rating']
         else:
-            watchlist.avg_rating=(watchlist.avg_rating+serializer.validated_data['rating']/2)
+            watchlist.avg_rating=(watchlist.avg_rating+serializer.validated_data['rating'])/2
         
         watchlist.number_of_rating=watchlist.number_of_rating+1
         watchlist.save()
