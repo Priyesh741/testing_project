@@ -33,4 +33,4 @@ class Review(models.Model):
     update=models.DateTimeField(auto_now=True)   #When it's set: Every time the object is saved (created or updated).
 
     def __str__(self):
-        return self.watchlist.title +" *Reviews "+ str(self.rating)
+        return self.watchlist.title +"| Reviews "+ str(self.rating)+"| "+str(self.review_user)
