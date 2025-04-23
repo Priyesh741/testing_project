@@ -99,7 +99,7 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewList(generics.ListCreateAPIView):
     #queryset=Review.objects.all()
     serializer_class=ReviewSerializer
-    #permission_classes=[IsAuthenticated]
+    permission_classes=[IsAuthenticated]
 #self.kwargs is a dictionary of keyword arguments captured from the URL pattern (like path('movie/<int:pk>/reviews/', ...)).
     def get_queryset(self):
         pk=self.kwargs['pk']
