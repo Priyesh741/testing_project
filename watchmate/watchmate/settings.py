@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'django_filters',
+
 ]
 
 MIDDLEWARE = [
@@ -140,7 +142,18 @@ REST_FRAMEWORK = {
         #'rest_framework.authentication.BasicAuthentication',
         #'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    ],
+    # 'DEFAULT_THROTTLE_CLASSES':[
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ],
+    'DEFAULT_THROTTLE_RATES':{
+        'anon':'3/day',
+        'user':'10/day',
+        'ReviewCreate':'1/day',
+        'ReviewList':'10/day',
+        'Review-detail':'2/day'
+    }
 }
 
 SIMPLE_JWT = {

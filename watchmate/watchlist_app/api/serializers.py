@@ -16,10 +16,10 @@ class ReviewSerializer(serializers.ModelSerializer):
         exclude=['watchlist']
 
 class WatchListSerializer(serializers.ModelSerializer):
-    reviews=ReviewSerializer(many=True,read_only=True)
-
+    # reviews=ReviewSerializer(many=True,read_only=True)
+    platform=serializers.CharField(source='platform.name')
     #custom serializer
-    len_name=serializers.SerializerMethodField()
+    # len_name=serializers.SerializerMethodField()
     class Meta:
         model=WatchList
 
@@ -29,8 +29,8 @@ class WatchListSerializer(serializers.ModelSerializer):
         # you want to exclude some fields
         # exclude=['active']
 
-    def get_len_name(self,object):
-        return len(object.title)
+    # def get_len_name(self,object):
+    #     return len(object.title)
 
 class StreamPlatformSerializer(serializers.ModelSerializer):
     #nested serializers
