@@ -15,6 +15,7 @@ from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
 from .throttle import ReviewCreatethrottle,ReviewListthrottle
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter,OrderingFilter
+from .pagination import WatchListPagination,WatchListLOPagination,WatchListCPagination
 
 
 # Create your views here.
@@ -194,14 +195,19 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
 class WatchListSearch(generics.ListAPIView):
     queryset=WatchList.objects.all()
     serializer_class=WatchListSerializer
+    #pagination_class=WatchListPagination
+    # pagination_class=WatchListLOPagination
+
+    pagination_class=WatchListCPagination
     # filter_backends = [DjangoFilterBackend]
     # filterset_fields = ['title', 'platform__name']
 
     # filter_backends = [SearchFilter]
     # search_fields = ['title', 'platform__name']
     
-    filter_backends = [OrderingFilter]
-    ordering_fields = ['avg_rating']
+    # filter_backends = [OrderingFilter]
+    # ordering_fields = ['avg_rating']
+
 
 class WatchListAV(APIView):
     permission_classes=[IsAdminOrReadOnly]

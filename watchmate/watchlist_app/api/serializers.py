@@ -16,8 +16,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         exclude=['watchlist']
 
 class WatchListSerializer(serializers.ModelSerializer):
-    # reviews=ReviewSerializer(many=True,read_only=True)
-    platform=serializers.CharField(source='platform.name')
+    #reviews=ReviewSerializer(many=True,read_only=True)
+    platform=serializers.CharField(source='platform.name',read_only=True)
     #custom serializer
     # len_name=serializers.SerializerMethodField()
     class Meta:
@@ -31,6 +31,9 @@ class WatchListSerializer(serializers.ModelSerializer):
 
     # def get_len_name(self,object):
     #     return len(object.title)
+
+    # def create(self, validated_data):
+    #     return WatchList.objects.create(**validated_data)
 
 class StreamPlatformSerializer(serializers.ModelSerializer):
     #nested serializers
