@@ -84,7 +84,7 @@ class ReviewUser(generics.ListAPIView):
     # def get_queryset(self):
     #     username=self.kwargs['username']
     #     return Review.objects.filter(review_user__username=username)
-
+    
     def get_queryset(self):
         username = self.request.query_params.get('username')
         return Review.objects.filter(review_user__username=username)
@@ -196,7 +196,7 @@ class WatchListSearch(generics.ListAPIView):
     queryset=WatchList.objects.all()
     serializer_class=WatchListSerializer
     #pagination_class=WatchListPagination
-    # pagination_class=WatchListLOPagination
+    #pagination_class=WatchListLOPagination
 
     pagination_class=WatchListCPagination
     # filter_backends = [DjangoFilterBackend]

@@ -16,6 +16,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         exclude=['watchlist']
 
 class WatchListSerializer(serializers.ModelSerializer):
+    #nested serializer
     #reviews=ReviewSerializer(many=True,read_only=True)
     platform=serializers.CharField(source='platform.name',read_only=True)
     #custom serializer
@@ -41,7 +42,7 @@ class StreamPlatformSerializer(serializers.ModelSerializer):
     #watchlist=serializers.StringRelatedField(many=True,read_only=True)  #it return only movie name using in model def __str__()
     #watchlist=serializers.PrimaryKeyRelatedField(many=True,read_only=True) #it return id of movie 
     
-    #watchlist=serializers.HyperlinkedRelatedField(many=True,read_only=True,view_name="movie_details") #view name is url name
+    #watchlist=serializers.HyperlinkedRelatedField(many=True,read_only=True,view_name="movie_details") #view_name is url name
 
     class Meta:
         model=StreamPlatform

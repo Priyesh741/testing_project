@@ -135,6 +135,7 @@ REST_FRAMEWORK = {
     
    # 'DEFAULT_PERMISSION_CLASSES':[
    #        'rest_framework.permissions.IsAuthenticated'
+   #        'rest_framework.permissions.IsAdmin'
    #     ] ,
    # 
    
@@ -156,6 +157,10 @@ REST_FRAMEWORK = {
     },
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     # 'PAGE_SIZE': 5,
+
+    'DEFAULT_RENDERER_CLASSES':(
+        'rest_framework.renderers.JSONRenderer',
+    ),
 }
 
 SIMPLE_JWT = {
