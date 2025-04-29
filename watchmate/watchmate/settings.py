@@ -141,8 +141,8 @@ REST_FRAMEWORK = {
    
     'DEFAULT_AUTHENTICATION_CLASSES': [
         #'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     # 'DEFAULT_THROTTLE_CLASSES':[
     #     'rest_framework.throttling.AnonRateThrottle',
@@ -153,19 +153,19 @@ REST_FRAMEWORK = {
         'user':'10/day',
         'ReviewCreate':'1/day',
         'ReviewList':'10/day',
-        'Review-detail':'2/day'
+        'Review-detail':'100/day'
     },
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     # 'PAGE_SIZE': 5,
 
-    'DEFAULT_RENDERER_CLASSES':(
-        'rest_framework.renderers.JSONRenderer',
-    ),
+    # 'DEFAULT_RENDERER_CLASSES':(
+    #     'rest_framework.renderers.JSONRenderer',
+    # ),
 }
 
-SIMPLE_JWT = {
-    'ROTATE_REFRESH_TOKENS': True,
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=2)
-}
+# SIMPLE_JWT = {
+#     'ROTATE_REFRESH_TOKENS': True,
+#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+#     "REFRESH_TOKEN_LIFETIME": timedelta(days=2)
+# }
 
